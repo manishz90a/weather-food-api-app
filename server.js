@@ -1,6 +1,7 @@
 const express = require('express');
 const getWeatherInfo = require('./get-weather-info.js');
 const port = process.env.PORT || '3001';
+
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
