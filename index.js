@@ -24,6 +24,10 @@ var corsOptions = {
 
 app.use(cors({origin: '*'}));
 
+app.get("/", checkJwt, (req, res) => {
+  res.send("Hello Geeks");
+});
+
 app.get('/get-weather-info', checkJwt, (req, res) => {
     if (req.query.city) {
         getWeatherInfo.getWeatherInfo(req.query.city).
