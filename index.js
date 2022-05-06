@@ -15,7 +15,13 @@ var whitelist = ['http://localhost:4200', 'https://weather-food-ui-app.s3-websit
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
-      callback(null, true)
+      const response = {
+        headers: {
+          "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
+          "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS 
+        }
+      };
+      callback(null, response)
     } else {
       callback(new Error('Not allowed by CORS'))
     }
