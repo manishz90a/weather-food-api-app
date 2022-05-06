@@ -11,7 +11,7 @@ var app = express();
 app.use(express.static(__dirname + '/public'));
 
 
-var whitelist = ['http://localhost:4200', 'https://weather-food-ui-app.s3-website.ap-south-1.amazonaws.com']
+var whitelist = ['http://localhost:4200','https://d11h0hbt4zwkx0.cloudfront.net']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
