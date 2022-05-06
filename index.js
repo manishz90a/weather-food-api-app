@@ -15,20 +15,14 @@ var whitelist = ['http://localhost:4200', 'https://weather-food-ui-app.s3-websit
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
-      const response = {
-        headers: {
-          "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-          "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS 
-        }
-      };
-      callback(null, response)
+      callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
     }
   }
 }
 
-app.use(cors(corsOptions));
+app.use(cors({origin: '*'}));
 
 app.get('/get-weather-info', checkJwt, (req, res) => {
     if (req.query.city) {
@@ -46,3 +40,4 @@ console.log('Server is up on port ' + port);
 });
 
 module.exports.handler = serverless(app);
+
