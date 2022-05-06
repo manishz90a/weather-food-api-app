@@ -1,13 +1,30 @@
 const serverless = require('serverless-http');
 const express = require('express');
 const getWeatherInfo = require('./get-weather-info.js');
+const { checkJwt } = require("./authz/check-jwt");
+const cors = require('cors');
+
 const port = process.env.PORT || '3001';
 
 var app = express();
 
 app.use(express.static(__dirname + '/public'));
-  
-app.get('/get_weather_info', (req, res) => {
+
+
+var whitelist = ['http://localhost:4200', 'https://weather-food-ui-app.s3-website.ap-south-1.amazonaws.com']
+var corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.indexOf(origin) !== -1) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+app.use(cors(corsOptions));
+
+app.get('/get-weather-info', checkJwt, (req, res) => {
     if (req.query.city) {
         getWeatherInfo.getWeatherInfo(req.query.city).
         then((data)=>{
