@@ -10,7 +10,6 @@ var app = express();
 
 app.use(express.static(__dirname + '/public'));
 
-
 var whitelist = ['http://localhost:4200','https://d11h0hbt4zwkx0.cloudfront.net']
 var corsOptions = {
   origin: function (origin, callback) {
@@ -22,7 +21,7 @@ var corsOptions = {
   }
 }
 
-app.use(cors({origin: '*'}));
+app.use(cors(corsOptions));
 
 app.get("/", checkJwt, (req, res) => {
   res.send("Hello Geeks");
